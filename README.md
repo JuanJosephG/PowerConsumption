@@ -8,9 +8,9 @@ To learn more check out our [documentation](https://plot.ly/dash).
 
 
 ## Pre-requisites:
-You'll need the `.env` file to run the app.py.
+You need the `.env` file to run the app.py.
 
-Also, you'll need `python>=3.6.8`
+Also, you need `python>=3.6.8`
 
 
 ## Local Setup
