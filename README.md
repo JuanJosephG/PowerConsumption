@@ -15,7 +15,7 @@ Also, you need `python>=3.6.8`
 
 ## Local Setup
 ```bash
-git clone https://github.com/getbento/<repo-name>.git
+git clone https://github.com/JuanJosephG/PowerConsumption.git
 pip3 install -r requeriments
 ```
 
