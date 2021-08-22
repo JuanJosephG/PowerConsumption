@@ -5,7 +5,7 @@ import boto3
 import pandas as pd
 
 
-class s3Utils(object):
+class S3Connection(object):
     def __init__(self):
         load_dotenv()
 
@@ -29,5 +29,8 @@ class s3Utils(object):
             df_cnel_latlong = pd.read_csv(response.get("Body"))
         else:
             print(f"Unsuccessful S3 get_object response. Status - {status}")
+
+        df_cnel_latlong['cluster_2d'] = df_cnel_latlong['cluster_2d'].astype("string")
+        df_cnel_latlong['cluster'] = df_cnel_latlong['cluster'].astype("string")
         
         return df_cnel_latlong
