@@ -9,9 +9,15 @@ class S3Connection(object):
     def __init__(self):
         load_dotenv()
 
-        self._AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
-        self._AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY")
-        self._AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+        # use in dev environment
+        # self._AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
+        # self._AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY")
+        # self._AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+        # use to production
+        self._AWS_S3_BUCKET = os.environ('AWS_S3_BUCKET')
+        self._AWS_ACCESS_KEY_ID = os.environ('AWS_ACCESS_KEY')
+        self._AWS_SECRET_ACCESS_KEY = os.environ('AWS_SECRET_ACCESS_KEY')
 
         self.s3_client = boto3.client(
             "s3",
