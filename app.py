@@ -32,6 +32,20 @@ for cluster24 in sorted(df_cnel['cluster'].unique()):
   data = (cluster24, count)
   cluster_24dim_data.append(data)
 
+cluster_2dim_dbscan_data = []
+for cluster_2d_dbscan in sorted(df_cnel['cluster_dbscan_2d'].unique(),key=int):
+  if(cluster_2d_dbscan != '-1'):
+    count = df_cnel.loc[(df_cnel["cluster_dbscan_2d"] == cluster_2d_dbscan)].shape[0]
+    data = (cluster_2d_dbscan, count)
+    cluster_2dim_dbscan_data.append(data)
+
+estratos_data = []
+for estrato in sorted(df_cnel['estrato'].unique()):
+  if (estrato != '5' and estrato != "X"):
+    count = df_cnel.loc[(df_cnel["estrato"] == estrato)].shape[0]
+    data = (estrato, count)
+    estratos_data.append(data)
+
 app.layout = html.Div(
     [
         dcc.Store(id='aggregate_data'),
@@ -71,15 +85,15 @@ app.layout = html.Div(
                 html.Div(
                     [
                         html.P(
-                            'Métodos de Clustering:',
+                            'Métodos de Clustering y Estratificación:',
                             className="control_label"
                         ),
                         dcc.RadioItems(
-                            id='well_status_selector',
+                            id='clustering_selector',
                             options=[
                                 {'label': 'Kmeans', 'value': 'kmeans'},
                                 {'label': 'DBSCAN', 'value': 'dbscan'},
-                                {'label': 'Kmediods', 'value': 'kmediods'}
+                                {'label': 'Estratificación Actual', 'value': 'actual'},
                             ],
                             value='kmeans',
                             labelStyle={'display': 'inline-block'},
@@ -90,11 +104,10 @@ app.layout = html.Div(
                             className="control_label"
                         ),
                         dcc.RadioItems(
-                            id = 'kmeans_dim_selector',
+                            id = 'dim_selector',
                             options=[
                                 {'label': 'Usando 24 Meses', 'value': '24'},
                                 {'label': 'Usando Promedio y Desviación Estándar', 'value': '2'},
-                                {'label': 'Usando Estratificación Actual', 'value': '3'}
                             ],
                             value='24',
                             labelStyle={'display': 'block'},
@@ -220,14 +233,25 @@ app.layout = html.Div(
 # Callback to use map
 @app.callback(
     Output("main_graph", "figure"),
-    [Input("kmeans_dim_selector", "value")])
-def update_figure(kmeans_dim_selector):
-  if kmeans_dim_selector == '2':
-    list_cluster = cluster_2dim_data
-    return figures.plot_fig2d()
-  elif kmeans_dim_selector == '24':
-    list_cluster = cluster_24dim_data
-    return figures.plot_fig()
+    [Input("clustering_selector", "value")],
+    [Input("dim_selector", "value")])
+def update_figure(clustering_selector, dim_selector):
+    if clustering_selector == 'kmeans':
+        if dim_selector == '2':
+            list_cluster = cluster_2dim_data
+            return figures.plot_fig2d()
+        elif dim_selector == '24':
+            list_cluster = cluster_24dim_data
+            return figures.plot_fig()
+
+    if clustering_selector == 'dbscan':
+        if dim_selector == '2':
+            list_cluster = cluster_2dim_dbscan_data
+            return figures.plot_fig2d_dbscan()
+
+    if clustering_selector == 'actual':
+        list_cluster = estratos_data
+        return figures.plot_estratos()
 
 # Callback to use line plot
 @app.callback(
@@ -237,7 +261,7 @@ def update_line_plot(hoverData):
   chosen = [point['hovertext'] for point in hoverData['points']]
   promedio = hoverData['points'][0]['customdata'][0]
   cuentacontrato = chosen[0]
-  return figures.plot_individual(cuentacontrato,promedio)
+  return figures.plot_individual(cuentacontrato, promedio)
 
 
 # Main

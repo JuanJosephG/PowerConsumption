@@ -74,3 +74,35 @@ class Figures(object):
         fig.update_xaxes(tickformat='%Y-%m')
         fig.update_xaxes(tickvals = MES_TICKS)
         return fig
+
+    def plot_estratos(self):
+        fig_estratos = px.scatter_mapbox((self.df_cnel.loc[(self.df_cnel['top_25_estrato'] == 1) | (self.df_cnel['top_25_estrato'] == -1)]), 
+                                lat="lat", lon="long", hover_name="cuenta_contrato",
+                                color="estrato", zoom=10, height=450, hover_data = ["promedio","std"] )
+        fig_estratos.update_layout(mapbox_style="carto-positron")
+        fig_estratos.update_layout(legend=dict(
+            yanchor="top",
+            y=0.99,
+            xanchor="left",
+            x=0.01
+        ))
+        #fig_2d.update_layout(mapbox_style="open-street-map")
+        fig_estratos.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+        #fig.show()
+        return fig_estratos
+    
+    def plot_fig2d_dbscan(self):
+        fig_2d_dbscan = px.scatter_mapbox((self.df_cnel.loc[(self.df_cnel['cluster_dbscan_2d'] != '-1')]), 
+                                lat="lat", lon="long", hover_name="cuenta_contrato",
+                                color="cluster_dbscan_2d", zoom=10, height=450, hover_data = ["promedio","std", "distancia_2d","centroide_2d"] )
+        fig_2d_dbscan.update_layout(mapbox_style="carto-positron")
+        fig_2d_dbscan.update_layout(
+            legend=dict(
+                yanchor="top",
+                y=0.99,
+                xanchor="left",
+                x=0.01
+            )
+        )
+        fig_2d_dbscan.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+        return fig_2d_dbscan

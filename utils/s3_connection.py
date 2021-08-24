@@ -26,7 +26,7 @@ class S3Connection(object):
         )
 
     def read_df_cnel_latlong(self):
-        response = self.s3_client.get_object(Bucket=self._AWS_S3_BUCKET, Key="files/cnel_latlong_avgsort.csv")
+        response = self.s3_client.get_object(Bucket=self._AWS_S3_BUCKET, Key="files/df_cnel.csv")
 
         status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
@@ -38,5 +38,7 @@ class S3Connection(object):
 
         df_cnel_latlong['cluster_2d'] = df_cnel_latlong['cluster_2d'].astype("string")
         df_cnel_latlong['cluster'] = df_cnel_latlong['cluster'].astype("string")
+        df_cnel_latlong['cluster_dbscan_2d'] = df_cnel_latlong['cluster_dbscan_2d'].astype("string")
+        df_cnel_latlong['estrato'] = df_cnel_latlong['estrato'].astype("string")
         
         return df_cnel_latlong
