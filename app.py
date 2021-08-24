@@ -1,4 +1,5 @@
 import dash
+import dash_auth
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
@@ -8,8 +9,15 @@ from dash.dependencies import Input, Output
 from utils.s3_connection import S3Connection
 from utils.figures import Figures
 
+VALID_USERNAME_PASSWORD_PAIRS = {
+    'jorge': 'jorge123'
+}
 
 app = dash.Dash(__name__,title="CNEL")
+auth = dash_auth.BasicAuth(
+    app,
+    VALID_USERNAME_PASSWORD_PAIRS
+)
 server = app.server
 
 # Read s3Utils
