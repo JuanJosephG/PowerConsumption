@@ -105,11 +105,6 @@ app.layout = html.Div(
                         ),
                         dcc.RadioItems(
                             id = 'dim_selector',
-                            options=[
-                                {'label': 'Usando 24 Meses', 'value': '24'},
-                                {'label': 'Usando Promedio y Desviación Estándar', 'value': '2'},
-                            ],
-                            value='24',
                             labelStyle={'display': 'block'},
                             className="dcc_control"
                         ),
@@ -232,6 +227,31 @@ app.layout = html.Div(
 
 # Callback to use map
 @app.callback(
+    Output("dim_selector", "options"),
+    Output("dim_selector", "value"),
+    [Input("clustering_selector", "value")]
+)
+def update_dimselector(clustering_selector):
+    if clustering_selector == 'kmeans':
+        options=[
+                    {'label': 'Usando 24 Meses', 'value': '24'},
+                    {'label': 'Usando Promedio y Desviación Estándar', 'value': '2'},
+                ]
+        return options, '24'
+
+    if clustering_selector == 'dbscan':
+        options=[
+                {'label': 'Usando Promedio y Desviación Estándar', 'value': '3'},
+            ]
+        return options, '3'
+
+    if clustering_selector == 'actual':
+        options=[
+                {'label': 'Usando Promedio 24 Meses', 'value': '4'},
+            ]
+        return options, '4'
+
+@app.callback(
     Output("main_graph", "figure"),
     [Input("clustering_selector", "value")],
     [Input("dim_selector", "value")])
@@ -245,9 +265,8 @@ def update_figure(clustering_selector, dim_selector):
             return figures.plot_fig()
 
     if clustering_selector == 'dbscan':
-        if dim_selector == '2':
-            list_cluster = cluster_2dim_dbscan_data
-            return figures.plot_fig2d_dbscan()
+        list_cluster = cluster_2dim_dbscan_data
+        return figures.plot_fig2d_dbscan()
 
     if clustering_selector == 'actual':
         list_cluster = estratos_data
