@@ -1,6 +1,7 @@
 import dash
 import dash_auth
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 
@@ -8,12 +9,15 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 from utils.s3_connection import S3Connection
 from utils.figures import Figures
+from utils.constans import DESCRIPTION_kmeans_24dim, DESCRIPTION_kmeans_2dim, DESCRIPTION_dbscan_2dim, DESCRIPTION_estratificacion
 
 VALID_USERNAME_PASSWORD_PAIRS = {
-    'jorge': 'jorge123'
+    'cnel': 'cnel123'
 }
 
-app = dash.Dash(__name__,title="CNEL")
+app = dash.Dash(__name__,title="CNEL", meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    ])
 auth = dash_auth.BasicAuth(
     app,
     VALID_USERNAME_PASSWORD_PAIRS
@@ -27,6 +31,8 @@ df_cnel= cnel_bucket.read_df_cnel_latlong()
 #df_cnel_gye.drop('Unnamed: 0', axis=1, inplace=True)
 
 figures = Figures(df_cnel)
+
+description_clustering = DESCRIPTION_kmeans_24dim
 
 cluster_2dim_data = []
 for cluster2 in sorted(df_cnel['cluster_2d'].unique()):
@@ -72,7 +78,8 @@ app.layout = html.Div(
                     className='eight columns'
                 ),
                 html.Img(
-                    src="https://s3-us-west-1.amazonaws.com/plotly-tutorials/logo/new-branding/dash-logo-by-plotly-stripe.png",
+                    #src="https://s3-us-west-1.amazonaws.com/plotly-tutorials/logo/new-branding/dash-logo-by-plotly-stripe.png",
+                    src="https://drive.google.com/uc?export=view&id=1eWQPRdZT2lALPve976TDB3PqiIYT4p22",
                     className='two columns',
                 ),
                 html.A(
@@ -116,6 +123,12 @@ app.layout = html.Div(
                             labelStyle={'display': 'block'},
                             className="dcc_control"
                         ),
+                        html.P(
+                            'Descripción Método de Clustering y Estratificación (?)',
+                            id="description_clustering",
+                            title=description_clustering,
+                            style={"textDecoration": "underline", "color":"#0060ae"}
+                        )
                     ],
                     className="pretty_container four columns"
                 ),
@@ -261,24 +274,25 @@ def update_dimselector(clustering_selector):
 
 @app.callback(
     Output("main_graph", "figure"),
+    Output("description_clustering", "title"),
     [Input("clustering_selector", "value")],
     [Input("dim_selector", "value")])
 def update_figure(clustering_selector, dim_selector):
     if clustering_selector == 'kmeans':
         if dim_selector == '2':
             list_cluster = cluster_2dim_data
-            return figures.plot_fig2d()
+            return figures.plot_fig2d(), DESCRIPTION_kmeans_2dim
         elif dim_selector == '24':
             list_cluster = cluster_24dim_data
-            return figures.plot_fig()
+            return figures.plot_fig(), DESCRIPTION_kmeans_24dim
 
     if clustering_selector == 'dbscan':
         list_cluster = cluster_2dim_dbscan_data
-        return figures.plot_fig2d_dbscan()
+        return figures.plot_fig2d_dbscan(), DESCRIPTION_dbscan_2dim
 
     if clustering_selector == 'actual':
         list_cluster = estratos_data
-        return figures.plot_estratos()
+        return figures.plot_estratos(), DESCRIPTION_estratificacion
 
 # Callback to use line plot
 @app.callback(
@@ -293,4 +307,5 @@ def update_line_plot(hoverData):
 
 # Main
 if __name__ == '__main__':
-    app.run_server(debug=True, threaded=True, dev_tools_ui=True)
+    #app.run_server(debug=True, threaded=True, dev_tools_ui=True)
+    app.run_server(debug=False, threaded=True, dev_tools_ui=True)

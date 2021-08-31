@@ -94,7 +94,7 @@ class Figures(object):
     def plot_fig2d_dbscan(self):
         fig_2d_dbscan = px.scatter_mapbox((self.df_cnel.loc[(self.df_cnel['cluster_dbscan_2d'] != '-1')]), 
                                 lat="lat", lon="long", hover_name="cuenta_contrato",
-                                color="cluster_dbscan_2d", zoom=10, height=450, hover_data = ["promedio","std", "distancia_2d","centroide_2d"] )
+                                color="cluster_dbscan_2d", zoom=10, height=450, hover_data = ["promedio","std"] )
         fig_2d_dbscan.update_layout(mapbox_style="carto-positron")
         fig_2d_dbscan.update_layout(
             legend=dict(

@@ -37,3 +37,26 @@ MES_TICKS = [
     "2020-10",
     "2020-12",
     ]
+
+DESCRIPTION_kmeans_24dim = """K-means es un algoritmo de clasificación no   supervisada
+(clusterización) que agrupa objetos en k grupos basándose
+en sus características. En este caso se está tomando   en
+consideración el consumo eléctrico [kwh] mensual los años 
+2019 y 2020"""
+
+DESCRIPTION_kmeans_2dim = """K-means es un algoritmo de clasificación no   supervisada
+(clusterización) que agrupa objetos en k grupos basándose
+en sus características. En este caso se está tomando   en
+consideración el consumo eléctrico promedio  [kwh]  y  la 
+desviación estándar de los 24 meses correspondiente a los 
+2019 y 2020"""
+
+DESCRIPTION_dbscan_2dim = """Descripción DBSCAN"""
+
+DESCRIPTION_estratificacion = """Estratificación actual usada por la Unidad de Negocios
+divide el promedio de los consumos anuales por rangos:
+estrato 1: promedio >= 10  y promedio < 150
+estrato 2: promedio >= 150 y promedio < 250
+estrato 3: promedio >= 250 y promedio < 500
+estrato 4: promedio >= 500 y promedio < 1000
+estrato 5: promedio >= 1000"""
