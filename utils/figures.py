@@ -106,3 +106,162 @@ class Figures(object):
         )
         fig_2d_dbscan.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
         return fig_2d_dbscan
+
+    def cluster_kmeans24dim(self):
+        cluster_24dim_data = []
+        for cluster in sorted(self.df_cnel['cluster'].unique()):
+            count = self.df_cnel.loc[(self.df_cnel["cluster"] == cluster)].shape[0]
+            data = (cluster, count)
+            cluster_24dim_data.append(data)
+
+        kmeans24dim_labels = [data[0] for data in cluster_24dim_data]
+        kmeans24dim_count = [data[1] for data in cluster_24dim_data]
+
+        promedio_kmeans24dim = []
+        for cluster in kmeans24dim_labels:
+            promedio = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).mean(),4)
+            promedio_kmeans24dim.append(promedio)
+
+        min_kmeans24dim = []
+        for cluster in kmeans24dim_labels:
+            min = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).min(),4)
+            min_kmeans24dim.append(min)
+
+        max_kmeans24dim = []
+        for cluster in kmeans24dim_labels:
+            max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
+            max_kmeans24dim.append(max)
+
+        fig_clusters_estratos = px.bar( x = kmeans24dim_labels, y = kmeans24dim_count, 
+                                        title='K-means 24 Dim Cluster Data', 
+                                        hover_data=[promedio_kmeans24dim, min_kmeans24dim, max_kmeans24dim],
+                                        width=760, height=270)
+        fig_clusters_estratos.update_yaxes(title="Usuarios")
+        fig_clusters_estratos.update_xaxes(title="Clusters")
+        fig_clusters_estratos.update_xaxes(tickvals = kmeans24dim_labels)
+        fig_clusters_estratos.update_traces(hovertemplate='<b>Cluster: </b>: %{x}<br>' + 
+                                        '<br><b>No. Usuarios: </b>: %{y}<br>' + 
+                                        '<br><b>Promedio [kwh]: </b>: %{customdata[0]}<br>'+ 
+                                        '<br><b>Mínimo [kwh]: </b>: %{customdata[1]}<br>'+
+                                        '<br><b>Máximo [kwh]: </b>: %{customdata[2]}<br>'
+                                        )
+
+        return fig_clusters_estratos
+
+    def cluster_kmeans2dim(self):
+        cluster_2dim_data = []
+        for cluster2 in sorted(self.df_cnel['cluster_2d'].unique()):
+            count = self.df_cnel.loc[(self.df_cnel["cluster_2d"] == cluster2)].shape[0]
+            data = (cluster2, count)
+            cluster_2dim_data.append(data)
+
+        kmeans2dim_labels = [data[0] for data in cluster_2dim_data]
+        kmeans2dim_count = [data[1] for data in cluster_2dim_data]
+
+        promedio_kmeans2dim = []
+        for cluster in kmeans2dim_labels:
+            promedio = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).mean(),4)
+            promedio_kmeans2dim.append(promedio)
+
+        min_kmeans2dim = []
+        for cluster in kmeans2dim_labels:
+            min = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).min(),4)
+            min_kmeans2dim.append(min)
+        
+        max_kmeans2dim = []
+        for cluster in kmeans2dim_labels:
+            max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
+            max_kmeans2dim.append(max)
+
+        fig_clusters_estratos = px.bar( x = kmeans2dim_labels, y = kmeans2dim_count, title='K-means 2 Dim Cluster Data', hover_data=[promedio_kmeans2dim, min_kmeans2dim, max_kmeans2dim])
+        fig_clusters_estratos.update_yaxes(title="Usuarios")
+        fig_clusters_estratos.update_xaxes(title="Clusters")
+        fig_clusters_estratos.update_xaxes(tickvals = kmeans2dim_labels)
+        fig_clusters_estratos.update_traces(hovertemplate='<b>Cluster: </b>: %{x}<br>' + 
+                                        '<br><b>No. Usuarios: </b>: %{y}<br>' + 
+                                        '<br><b>Promedio [kwh]: </b>: %{customdata[0]}<br>'+ 
+                                        '<br><b>Mínimo [kwh]: </b>: %{customdata[1]}<br>'+
+                                        '<br><b>Máximo [kwh]: </b>: %{customdata[2]}<br>'
+                                        )
+        return fig_clusters_estratos
+
+    def cluster_dbscan2dim(self):
+        cluster_2dim_dbscan_data = []
+        for cluster_2d_dbscan in sorted(self.df_cnel['cluster_dbscan_2d'].unique(),key=int):
+            if(cluster_2d_dbscan != '-1'):
+                count = self.df_cnel.loc[(self.df_cnel["cluster_dbscan_2d"] == cluster_2d_dbscan)].shape[0]
+                data = (cluster_2d_dbscan, count)
+                cluster_2dim_dbscan_data.append(data)
+    
+        dbscan_clusters_labels = [data[0] for data in cluster_2dim_dbscan_data]
+        dbscan_clusters_count = [data[1] for data in cluster_2dim_dbscan_data]
+
+        promedio_dbscan = []
+        for cluster in dbscan_clusters_labels:
+            promedio = round((self.df_cnel[(self.df_cnel['cluster_dbscan_2d'] == cluster)]['promedio']).mean(),4)
+            promedio_dbscan.append(promedio)
+
+        min_dbscan = []
+        for cluster in dbscan_clusters_labels:
+            min = round((self.df_cnel[(self.df_cnel['cluster_dbscan_2d'] == cluster)]['promedio']).min(),4)
+            min_dbscan.append(min)
+
+        max_dbscan = []
+        for cluster in dbscan_clusters_labels:
+            max = round((self.df_cnel[(self.df_cnel['cluster_dbscan_2d'] == cluster)]['promedio']).max(),4)
+            max_dbscan.append(max)
+
+        fig_clusters_dbscan = px.bar( x = dbscan_clusters_labels, y = dbscan_clusters_count, title='Dbscan Cluster Data', hover_data=[promedio_dbscan, min_dbscan, max_dbscan])
+        fig_clusters_dbscan.update_yaxes(title="Usuarios")
+        fig_clusters_dbscan.update_xaxes(title="Clusters")
+        fig_clusters_dbscan.update_xaxes(tickvals = dbscan_clusters_labels)
+        fig_clusters_dbscan.update_traces(hovertemplate='<b>Cluster: </b>: %{x}<br>' + 
+                                        '<br><b>No. Usuarios: </b>: %{y}<br>' + 
+                                        '<br><b>Promedio [kwh]: </b>: %{customdata[0]}<br>'+ 
+                                        '<br><b>Mínimo [kwh]: </b>: %{customdata[1]}<br>'+
+                                        '<br><b>Máximo [kwh]: </b>: %{customdata[2]}<br>'
+                                        )
+
+        return fig_clusters_dbscan
+
+    def cluster_estratos(self):
+        estratos_data = []
+        for estrato in sorted(self.df_cnel['estrato'].unique()):
+            if (estrato != '5' and estrato != "X"):
+                count = self.df_cnel.loc[(self.df_cnel["estrato"] == estrato)].shape[0]
+                data = (estrato, count)
+                estratos_data.append(data)
+    
+        estratos_labels = [data[0] for data in estratos_data]
+        estratos_count = [data[1] for data in estratos_data]
+
+        promedio_estratos = []
+        for cluster in estratos_labels:
+            promedio = round((self.df_cnel[(self.df_cnel['estrato'] == cluster)]['promedio']).mean(),4)
+            promedio_estratos.append(promedio)
+
+        min_estratos = []
+        for cluster in estratos_labels:
+            min = round((self.df_cnel[(self.df_cnel['estrato'] == cluster)]['promedio']).min(),4)
+            min_estratos.append(min)
+
+        max_estratos = []
+        for cluster in estratos_labels:
+            max = round((self.df_cnel[(self.df_cnel['estrato'] == cluster)]['promedio']).max(),4)
+            max_estratos.append(max)
+
+        fig_clusters_estratos = px.bar( x = estratos_labels, y = estratos_count, title='Estratos Data', hover_data=[promedio_estratos, min_estratos, max_estratos])
+        fig_clusters_estratos.update_yaxes(title="Usuarios")
+        fig_clusters_estratos.update_xaxes(title="Clusters")
+        fig_clusters_estratos.update_xaxes(tickvals = estratos_labels)
+        fig_clusters_estratos.update_traces(hovertemplate='<b>Estrato: </b>: %{x}<br>' + 
+                                        '<br><b>No. Usuarios: </b>: %{y}<br>' + 
+                                        '<br><b>Promedio [kwh]: </b>: %{customdata[0]}<br>'+ 
+                                        '<br><b>Mínimo [kwh]: </b>: %{customdata[1]}<br>'+
+                                        '<br><b>Máximo [kwh]: </b>: %{customdata[2]}<br>'
+                                        )
+
+        return fig_clusters_estratos
+
+    def plot_graph_empty(self):
+        return {}

@@ -201,9 +201,25 @@ app.layout = html.Div(
                                 )
 
                             ],
-                            id="infoContainer",
+                            id="infoContainer container-display",
                             className="row"
                         ),
+                        html.Div(
+                            [
+                                html.Div(
+                                    [
+                                        dcc.Loading(
+                                            children=dcc.Graph(
+                                                id='cluster_graph',
+                                                figure=figures.cluster_kmeans24dim()
+                                            )
+                                        )
+                                    ],
+                                    className='pretty_container',
+                                )
+                            ],
+                            className='row'
+                        )
                     ],
                     id="rightCol",
                     className="eight columns"
@@ -228,7 +244,8 @@ app.layout = html.Div(
                     [
                         dcc.Loading(
                             children=dcc.Graph(
-                                id='individual_graph'
+                                id='individual_graph',
+                                figure = figures.plot_graph_empty()
                             )
                         )
                     ],
@@ -275,34 +292,36 @@ def update_dimselector(clustering_selector):
 @app.callback(
     Output("main_graph", "figure"),
     Output("description_clustering", "title"),
+    Output("cluster_graph", "figure"),
     [Input("clustering_selector", "value")],
     [Input("dim_selector", "value")])
 def update_figure(clustering_selector, dim_selector):
     if clustering_selector == 'kmeans':
         if dim_selector == '2':
             list_cluster = cluster_2dim_data
-            return figures.plot_fig2d(), DESCRIPTION_kmeans_2dim
+            return figures.plot_fig2d(), DESCRIPTION_kmeans_2dim, figures.cluster_kmeans2dim()
         elif dim_selector == '24':
             list_cluster = cluster_24dim_data
-            return figures.plot_fig(), DESCRIPTION_kmeans_24dim
+            return figures.plot_fig(), DESCRIPTION_kmeans_24dim, figures.cluster_kmeans24dim()
 
     if clustering_selector == 'dbscan':
         list_cluster = cluster_2dim_dbscan_data
-        return figures.plot_fig2d_dbscan(), DESCRIPTION_dbscan_2dim
+        return figures.plot_fig2d_dbscan(), DESCRIPTION_dbscan_2dim, figures.cluster_dbscan2dim()
 
     if clustering_selector == 'actual':
         list_cluster = estratos_data
-        return figures.plot_estratos(), DESCRIPTION_estratificacion
+        return figures.plot_estratos(), DESCRIPTION_estratificacion, figures.cluster_estratos()
 
 # Callback to use line plot
 @app.callback(
     Output("individual_graph", "figure"),
     [Input("main_graph", "hoverData")])
 def update_line_plot(hoverData):
-  chosen = [point['hovertext'] for point in hoverData['points']]
-  promedio = hoverData['points'][0]['customdata'][0]
-  cuentacontrato = chosen[0]
-  return figures.plot_individual(cuentacontrato, promedio)
+  if(hoverData):
+    chosen = [point['hovertext'] for point in hoverData['points']]
+    promedio = hoverData['points'][0]['customdata'][0]
+    cuentacontrato = chosen[0]
+    return figures.plot_individual(cuentacontrato, promedio)
 
 
 # Main
