@@ -84,11 +84,11 @@ app.layout = html.Div(
                 ),
                 html.A(
                     html.Button(
-                        "Learn More",
+                        "Visita Cnel",
                         id="learnMore"
 
                     ),
-                    href="https://plot.ly/dash/pricing/",
+                    href="https://www.cnelep.gob.ec/",
                     className="two columns"
                 )
             ],
@@ -317,11 +317,11 @@ def update_figure(clustering_selector, dim_selector):
     Output("individual_graph", "figure"),
     [Input("main_graph", "hoverData")])
 def update_line_plot(hoverData):
-  if(hoverData):
     chosen = [point['hovertext'] for point in hoverData['points']]
     promedio = hoverData['points'][0]['customdata'][0]
     cuentacontrato = chosen[0]
     return figures.plot_individual(cuentacontrato, promedio)
+
 
 
 # Main
