@@ -326,5 +326,6 @@ def update_line_plot(hoverData):
 
 # Main
 if __name__ == '__main__':
-    #app.run_server(debug=True, threaded=True, dev_tools_ui=True)
-    app.run_server(debug=False, threaded=True, dev_tools_ui=True)
+    #app.run_server(debug=True, threaded=True, dev_tools_ui=True) #dev-debug
+    #app.run_server(debug=False, threaded=True, dev_tools_ui=True) #dev-debug-false
+    app.run_server(debug=False, threaded=True, dev_tools_ui=True, port=80, host='0.0.0.0') #prod

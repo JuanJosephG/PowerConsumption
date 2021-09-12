@@ -132,7 +132,7 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans24dim.append(max)
 
-        fig_clusters_estratos = px.bar( x = kmeans24dim_labels, y = kmeans24dim_count, 
+        fig_clusters_estratos = px.bar( x = kmeans24dim_labels, y = kmeans24dim_count, text=kmeans24dim_count,
                                         title='K-means 24 Dim Cluster Data', 
                                         hover_data=[promedio_kmeans24dim, min_kmeans24dim, max_kmeans24dim],
                                         width=760, height=270)
@@ -173,7 +173,9 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans2dim.append(max)
 
-        fig_clusters_estratos = px.bar( x = kmeans2dim_labels, y = kmeans2dim_count, title='K-means 2 Dim Cluster Data', hover_data=[promedio_kmeans2dim, min_kmeans2dim, max_kmeans2dim])
+        fig_clusters_estratos = px.bar( x = kmeans2dim_labels, y = kmeans2dim_count, text= kmeans2dim_count,
+                                        title='K-means 2 Dim Cluster Data', 
+                                        hover_data=[promedio_kmeans2dim, min_kmeans2dim, max_kmeans2dim])
         fig_clusters_estratos.update_yaxes(title="Usuarios")
         fig_clusters_estratos.update_xaxes(title="Clusters")
         fig_clusters_estratos.update_xaxes(tickvals = kmeans2dim_labels)
@@ -211,7 +213,9 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster_dbscan_2d'] == cluster)]['promedio']).max(),4)
             max_dbscan.append(max)
 
-        fig_clusters_dbscan = px.bar( x = dbscan_clusters_labels, y = dbscan_clusters_count, title='Dbscan Cluster Data', hover_data=[promedio_dbscan, min_dbscan, max_dbscan])
+        fig_clusters_dbscan = px.bar( x = dbscan_clusters_labels, y = dbscan_clusters_count, text= dbscan_clusters_count,
+                                    title='Dbscan Cluster Data', 
+                                    hover_data=[promedio_dbscan, min_dbscan, max_dbscan])
         fig_clusters_dbscan.update_yaxes(title="Usuarios")
         fig_clusters_dbscan.update_xaxes(title="Clusters")
         fig_clusters_dbscan.update_xaxes(tickvals = dbscan_clusters_labels)
@@ -250,7 +254,9 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['estrato'] == cluster)]['promedio']).max(),4)
             max_estratos.append(max)
 
-        fig_clusters_estratos = px.bar( x = estratos_labels, y = estratos_count, title='Estratos Data', hover_data=[promedio_estratos, min_estratos, max_estratos])
+        fig_clusters_estratos = px.bar( x = estratos_labels, y = estratos_count, text= estratos_count,
+                                        title='Estratos Data', 
+                                        hover_data=[promedio_estratos, min_estratos, max_estratos])
         fig_clusters_estratos.update_yaxes(title="Usuarios")
         fig_clusters_estratos.update_xaxes(title="Clusters")
         fig_clusters_estratos.update_xaxes(tickvals = estratos_labels)
