@@ -9,7 +9,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 from utils.s3_connection import S3Connection
 from utils.figures import Figures
-from utils.constans import DESCRIPTION_kmeans_24dim, DESCRIPTION_kmeans_2dim, DESCRIPTION_dbscan_2dim, DESCRIPTION_estratificacion
+from utils.constants import DESCRIPTION_kmeans_24dim, DESCRIPTION_kmeans_2dim, DESCRIPTION_dbscan_2dim, DESCRIPTION_estratificacion
 
 VALID_USERNAME_PASSWORD_PAIRS = {
     'cnel': 'cnel123'

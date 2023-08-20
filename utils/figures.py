@@ -1,6 +1,6 @@
 import plotly.express as px
 
-from utils.constans import MES, MES_TICKS
+from utils.constants import MES, MES_TICKS
 
 # Plot the different figures
 class Figures(object):
