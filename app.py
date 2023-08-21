@@ -147,9 +147,9 @@ app.layout = html.Div(
                             [
                                 html.Div(
                                     [
-                                        html.P("No. de Registros"),
+                                        html.P("No. Registros Originales"),
                                         html.H6(
-                                            "458860",
+                                            "697747",
                                             id="total_reg",
                                             className="info_text"
                                         )
@@ -164,7 +164,7 @@ app.layout = html.Div(
                                             [
                                                 html.P("No. Reg. < 10 KWH"),
                                                 html.H6(
-                                                    "27345",
+                                                    "227045",
                                                     id="less10Text",
                                                     className="info_text"
                                                 )
@@ -176,7 +176,7 @@ app.layout = html.Div(
                                             [
                                                 html.P("No. Reg. > 1000 KWH"),
                                                 html.H6(
-                                                    "23353",
+                                                    "35041",
                                                     id="grather10Text",
                                                     className="info_text"
                                                 )
@@ -186,10 +186,22 @@ app.layout = html.Div(
                                         ),
                                         html.Div(
                                             [
-                                                html.P("Registros Usados"),
+                                                html.P("No. Reg. Coord."),
                                                 html.H6(
-                                                    "408162",
-                                                    id="regUseText",
+                                                    "643285",
+                                                    id="regCoordText",
+                                                    className="info_text"
+                                                )
+                                            ],
+                                            id="regcoord",
+                                            className="pretty_container"
+                                        ),
+                                        html.Div(
+                                            [
+                                                html.P("No. Reg. Usados"),
+                                                html.H6(
+                                                    "112510",
+                                                    id="regUsedText",
                                                     className="info_text"
                                                 )
                                             ],

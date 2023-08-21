@@ -26,7 +26,7 @@ class S3Connection(object):
         )
 
     def read_df_cnel_latlong(self):
-        response = self.s3_client.get_object(Bucket=self._AWS_S3_BUCKET, Key="files/df_cnel.csv")
+        response = self.s3_client.get_object(Bucket=self._AWS_S3_BUCKET, Key="files/df_gye.csv")
 
         status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
