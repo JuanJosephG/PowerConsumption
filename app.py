@@ -11,8 +11,19 @@ from utils.s3_connection import S3Connection
 from utils.figures import Figures
 from utils.constants import DESCRIPTION_kmeans_24dim, DESCRIPTION_kmeans_2dim, DESCRIPTION_dbscan_2dim, DESCRIPTION_estratificacion
 
+# Read s3Utils
+cnel_bucket = S3Connection()
+df_cnel= cnel_bucket.read_df_cnel_latlong()
+
+#df_cnel_gye.drop('Unnamed: 0', axis=1, inplace=True)
+credentials = cnel_bucket.read_credentials()
+crd = credentials.split(',')
+print(crd[0])
+print(crd[1])
+
+
 VALID_USERNAME_PASSWORD_PAIRS = {
-    'cnel': 'cnel123'
+    crd[0]: crd[1]
 }
 
 app = dash.Dash(__name__,title="Unidad Eléctrica", meta_tags=[
@@ -24,11 +35,7 @@ auth = dash_auth.BasicAuth(
 )
 server = app.server
 
-# Read s3Utils
-cnel_bucket = S3Connection()
-df_cnel= cnel_bucket.read_df_cnel_latlong()
 
-#df_cnel_gye.drop('Unnamed: 0', axis=1, inplace=True)
 
 figures = Figures(df_cnel)
 

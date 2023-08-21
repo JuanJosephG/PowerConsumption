@@ -42,3 +42,16 @@ class S3Connection(object):
         df_cnel_latlong['estrato'] = df_cnel_latlong['estrato'].astype("string")
         
         return df_cnel_latlong
+
+    def read_credentials(self):
+        response = self.s3_client.get_object(Bucket=self._AWS_S3_BUCKET, Key="files/gye_users.txt")
+
+        status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+
+        if status == 200:
+            print(f"Successful S3 get_object response. Status - {status}")
+            gye_users = str(response.get("Body").read().decode('utf-8'))
+        else:
+            print(f"Unsuccessful S3 get_object response. Status - {status}")
+        
+        return gye_users
