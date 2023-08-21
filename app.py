@@ -15,7 +15,7 @@ VALID_USERNAME_PASSWORD_PAIRS = {
     'cnel': 'cnel123'
 }
 
-app = dash.Dash(__name__,title="CNEL", meta_tags=[
+app = dash.Dash(__name__,title="Unidad Eléctrica", meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"},
     ])
 auth = dash_auth.BasicAuth(
@@ -68,7 +68,7 @@ app.layout = html.Div(
                 html.Div(
                     [
                         html.H2(
-                            'CNEL Consumo Eléctrico',
+                            'Unidad Eléctrica Consumo Energía',
                         ),
                         html.H4(
                             'Evaluación de Clustering',
@@ -78,17 +78,17 @@ app.layout = html.Div(
                     className='eight columns'
                 ),
                 html.Img(
-                    #src="https://s3-us-west-1.amazonaws.com/plotly-tutorials/logo/new-branding/dash-logo-by-plotly-stripe.png",
-                    src="https://drive.google.com/uc?export=view&id=1eWQPRdZT2lALPve976TDB3PqiIYT4p22",
+                    src="https://s3-us-west-1.amazonaws.com/plotly-tutorials/logo/new-branding/dash-logo-by-plotly-stripe.png",
+                    #src="https://drive.google.com/uc?export=view&id=1eWQPRdZT2lALPve976TDB3PqiIYT4p22",
                     className='two columns',
                 ),
                 html.A(
                     html.Button(
-                        "Visita Cnel",
+                        "Learn More",
                         id="learnMore"
 
                     ),
-                    href="https://www.cnelep.gob.ec/",
+                    href="https://plot.ly/dash/pricing/",
                     className="two columns"
                 )
             ],
@@ -137,12 +137,12 @@ app.layout = html.Div(
                         html.Div(
                             [
                                 html.P(
-                                    'Registros de CNEL - Consumo 2019 a 2020',
+                                    'Registros de Unidad Eléctrica - Consumo 2019 a 2020',
                                 ),
                             ],
                             className="info_text"
                         ),
-                        # Row para CNEL original
+                        # Row para Unidad Eléctrica original
                         html.Div(
                             [
                                 html.Div(
@@ -327,5 +327,5 @@ def update_line_plot(hoverData):
 # Main
 if __name__ == '__main__':
     #app.run_server(debug=True, threaded=True, dev_tools_ui=True) #dev-debug
-    #app.run_server(debug=False, threaded=True, dev_tools_ui=True) #dev-debug-false
-    app.run_server(debug=False, threaded=True, dev_tools_ui=True, port=80, host='0.0.0.0') #prod
+    app.run_server(debug=False, threaded=True, dev_tools_ui=True) #dev-debug-false
+    #app.run_server(debug=False, threaded=True, dev_tools_ui=True, port=80, host='0.0.0.0') #prod
