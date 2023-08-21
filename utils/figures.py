@@ -109,8 +109,10 @@ class Figures(object):
 
     def cluster_kmeans24dim(self):
         cluster_24dim_data = []
+        total = 0
         for cluster in sorted(self.df_cnel['cluster'].unique()):
             count = self.df_cnel.loc[(self.df_cnel["cluster"] == cluster)].shape[0]
+            total += count
             data = (cluster, count)
             cluster_24dim_data.append(data)
 
@@ -132,8 +134,10 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans24dim.append(max)
 
+        title_str = 'K-means 24 Dim Cluster Data' + ' Total No. Usuarios: ' + str(total)
+
         fig_clusters_estratos = px.bar( x = kmeans24dim_labels, y = kmeans24dim_count, text=kmeans24dim_count,
-                                        title='K-means 24 Dim Cluster Data', 
+                                        title=title_str, 
                                         hover_data=[promedio_kmeans24dim, min_kmeans24dim, max_kmeans24dim],
                                         width=760, height=270)
         fig_clusters_estratos.update_yaxes(title="Usuarios")
@@ -150,8 +154,10 @@ class Figures(object):
 
     def cluster_kmeans2dim(self):
         cluster_2dim_data = []
+        total = 0
         for cluster2 in sorted(self.df_cnel['cluster_2d'].unique()):
             count = self.df_cnel.loc[(self.df_cnel["cluster_2d"] == cluster2)].shape[0]
+            total += count
             data = (cluster2, count)
             cluster_2dim_data.append(data)
 
@@ -172,9 +178,11 @@ class Figures(object):
         for cluster in kmeans2dim_labels:
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans2dim.append(max)
+        
+        title_str = 'K-means 2 Dim Cluster Data' + ' Total No. Usuarios: ' + str(total)
 
         fig_clusters_estratos = px.bar( x = kmeans2dim_labels, y = kmeans2dim_count, text= kmeans2dim_count,
-                                        title='K-means 2 Dim Cluster Data', 
+                                        title=title_str, 
                                         hover_data=[promedio_kmeans2dim, min_kmeans2dim, max_kmeans2dim])
         fig_clusters_estratos.update_yaxes(title="Usuarios")
         fig_clusters_estratos.update_xaxes(title="Clusters")
@@ -189,9 +197,11 @@ class Figures(object):
 
     def cluster_dbscan2dim(self):
         cluster_2dim_dbscan_data = []
+        total = 0
         for cluster_2d_dbscan in sorted(self.df_cnel['cluster_dbscan_2d'].unique(),key=int):
             if(cluster_2d_dbscan != '-1'):
                 count = self.df_cnel.loc[(self.df_cnel["cluster_dbscan_2d"] == cluster_2d_dbscan)].shape[0]
+                total += count
                 data = (cluster_2d_dbscan, count)
                 cluster_2dim_dbscan_data.append(data)
     
@@ -213,8 +223,10 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster_dbscan_2d'] == cluster)]['promedio']).max(),4)
             max_dbscan.append(max)
 
+        title_str = 'Dbscan Cluster Data' + ' Total No. Usuarios: ' + str(total)
+
         fig_clusters_dbscan = px.bar( x = dbscan_clusters_labels, y = dbscan_clusters_count, text= dbscan_clusters_count,
-                                    title='Dbscan Cluster Data', 
+                                    title=title_str, 
                                     hover_data=[promedio_dbscan, min_dbscan, max_dbscan])
         fig_clusters_dbscan.update_yaxes(title="Usuarios")
         fig_clusters_dbscan.update_xaxes(title="Clusters")
@@ -230,9 +242,11 @@ class Figures(object):
 
     def cluster_estratos(self):
         estratos_data = []
+        total = 0
         for estrato in sorted(self.df_cnel['estrato'].unique()):
             if (estrato != '5' and estrato != "X"):
                 count = self.df_cnel.loc[(self.df_cnel["estrato"] == estrato)].shape[0]
+                total += count
                 data = (estrato, count)
                 estratos_data.append(data)
     
@@ -254,8 +268,10 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['estrato'] == cluster)]['promedio']).max(),4)
             max_estratos.append(max)
 
+        title_str = 'Estratos Data' + ' Total No. Usuarios: ' + str(total)
+
         fig_clusters_estratos = px.bar( x = estratos_labels, y = estratos_count, text= estratos_count,
-                                        title='Estratos Data', 
+                                        title=title_str, 
                                         hover_data=[promedio_estratos, min_estratos, max_estratos])
         fig_clusters_estratos.update_yaxes(title="Usuarios")
         fig_clusters_estratos.update_xaxes(title="Clusters")
