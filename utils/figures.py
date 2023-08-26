@@ -134,7 +134,7 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans24dim.append(max)
 
-        title_str = 'K-means 24 Dim Cluster Data' + ' - Total No. Usuarios: ' + str(total)
+        title_str = 'KMEANS 24 Dim Cluster Data' + ' - Total No. Usuarios: ' + str(total)
 
         fig_clusters_estratos = px.bar( x = kmeans24dim_labels, y = kmeans24dim_count, text=kmeans24dim_count,
                                         title=title_str, 
@@ -179,7 +179,7 @@ class Figures(object):
             max = round((self.df_cnel[(self.df_cnel['cluster'] == cluster)]['promedio']).max(),4)
             max_kmeans2dim.append(max)
         
-        title_str = 'K-means 2 Dim Cluster Data' + ' - Total No. Usuarios: ' + str(total)
+        title_str = 'KMEANS 2 Dim Cluster Data' + ' - Total No. Usuarios: ' + str(total)
 
         fig_clusters_estratos = px.bar( x = kmeans2dim_labels, y = kmeans2dim_count, text= kmeans2dim_count,
                                         title=title_str, 

@@ -38,13 +38,13 @@ MES_TICKS = [
     "2020-12",
     ]
 
-DESCRIPTION_kmeans_24dim = """K-means es un algoritmo de clasificación no   supervisada
+DESCRIPTION_kmeans_24dim = """KMEANS es un algoritmo de clasificación no   supervisada
 (clusterización) que agrupa objetos en k grupos basándose
 en sus características. En este caso se está tomando   en
 consideración el consumo eléctrico [kwh] mensual en los años 
 2019 y 2020"""
 
-DESCRIPTION_kmeans_2dim = """K-means es un algoritmo de clasificación no   supervisada
+DESCRIPTION_kmeans_2dim = """KMEANS es un algoritmo de clasificación no   supervisada
 (clusterización) que agrupa objetos en k grupos basándose
 en sus características. En este caso se está tomando   en
 consideración el consumo eléctrico promedio  [kwh]  y  la 
